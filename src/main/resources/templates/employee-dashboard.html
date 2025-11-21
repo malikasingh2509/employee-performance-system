@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Employee Dashboard</title>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+</head>
+
+<body class="bg-light">
+
+<!-- NAVBAR -->
+<nav class="navbar navbar-dark bg-success mb-4 px-4">
+    <span class="navbar-brand">
+        <i class="bi bi-speedometer2"></i> Employee Dashboard
+    </span>
+    <a th:href="@{/logout}" class="btn btn-outline-light btn-sm">
+        <i class="bi bi-box-arrow-right"></i> Logout
+    </a>
+</nav>
+
+<div class="container">
+
+    <!-- GREETING -->
+    <div class="alert alert-success d-flex align-items-center">
+        <i class="bi bi-person-circle fs-3 me-2"></i>
+        <h4 class="mb-0">
+            Welcome, <span th:text="${employee.name}"></span> 👋
+        </h4>
+    </div>
+
+    <!-- GOALS -->
+    <div class="card mb-4">
+        <div class="card-header bg-success text-white">
+            <i class="bi bi-bullseye"></i> Your Goals
+        </div>
+        <div class="card-body">
+
+            <table class="table table-bordered table-striped">
+                <thead class="table-success">
+                <tr>
+                    <th><i class="bi bi-check2-square"></i> Description</th>
+                    <th><i class="bi bi-calendar-event"></i> Target Date</th>
+                    <th><i class="bi bi-flag"></i> Status</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="g : ${goals}">
+                    <td th:text="${g.description}"></td>
+                    <td th:text="${g.targetDate}"></td>
+                    <td>
+                        <span th:text="${g.completed ? 'Completed' : 'Pending'}"
+                              th:classappend="${g.completed} ? 'badge bg-success' : 'badge bg-warning'">
+                        </span>
+                        <i th:class="${g.completed} ? 'bi bi-check-circle-fill text-success' : 'bi bi-hourglass-split text-warning'"></i>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+
+    <!-- EVALUATIONS -->
+    <div class="card mb-4">
+        <div class="card-header bg-primary text-white">
+            <i class="bi bi-bar-chart-line"></i> Performance Evaluations
+        </div>
+        <div class="card-body">
+
+            <table class="table table-bordered table-striped">
+                <thead class="table-primary">
+                <tr>
+                    <th><i class="bi bi-list-task"></i> Criteria</th>
+                    <th><i class="bi bi-star-fill"></i> Rating</th>
+                    <th><i class="bi bi-chat-left-text"></i> Comments</th>
+                    <th><i class="bi bi-calendar-check"></i> Date</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="ev : ${evaluations}">
+                    <td th:text="${ev.criteria}"></td>
+                    <td th:text="${ev.rating}"></td>
+                    <td th:text="${ev.comments}"></td>
+                    <td th:text="${ev.evaluationDate}"></td>
+                </tr>
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+
+    <!-- FEEDBACK -->
+    <div class="card mb-4">
+        <div class="card-header bg-secondary text-white">
+            <i class="bi bi-chat-square-quote"></i> Manager Feedback
+        </div>
+        <div class="card-body">
+
+            <table class="table table-bordered table-striped">
+                <thead class="table-secondary">
+                <tr>
+                    <th><i class="bi bi-quote"></i> Feedback</th>
+                    <th><i class="bi bi-star"></i> Rating</th>
+                    <th><i class="bi bi-calendar"></i> Date</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="f : ${feedbackList}">
+                    <td th:text="${f.comments}"></td>
+                    <td th:text="${f.rating}"></td>
+                    <td th:text="${f.feedbackDate}"></td>
+                </tr>
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+
+</div>
+
+</body>
+</html>

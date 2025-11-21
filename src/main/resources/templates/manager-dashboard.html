@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Manager Dashboard</title>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+
+    <style>
+        body {
+            background: #f4f6f9;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .navbar-brand {
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+
+        .card {
+            border: none;
+            border-radius: 12px;
+            box-shadow: 0 4px 18px rgba(0,0,0,0.06);
+        }
+
+        .table thead {
+            background: #eef5ff;
+        }
+
+        th {
+            font-size: 15px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        td {
+            vertical-align: middle;
+        }
+
+        .action-btn {
+            border-radius: 8px;
+            padding: 6px 10px;
+        }
+
+        .section-title {
+            font-weight: 600;
+            font-size: 22px;
+            margin-bottom: 15px;
+            color: #333;
+        }
+    </style>
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar navbar-expand-lg navbar-dark" style="background:#0b5ed7;">
+    <div class="container-fluid px-4">
+        <span class="navbar-brand">
+            <i class="bi bi-person-gear me-2"></i> Manager Dashboard
+        </span>
+
+        <a th:href="@{/logout}" class="btn btn-light btn-sm fw-semibold">
+            <i class="bi bi-box-arrow-right"></i> Logout
+        </a>
+    </div>
+</nav>
+
+<div class="container my-4">
+
+    <div class="section-title">
+        <i class="bi bi-people-fill text-primary"></i> Employees
+    </div>
+
+    <div class="card p-3">
+        <div class="table-responsive">
+            <table class="table align-middle">
+                <thead>
+                <tr>
+                    <th><i class="bi bi-person-badge"></i> Name</th>
+                    <th><i class="bi bi-envelope-at"></i> Email</th>
+                    <th><i class="bi bi-clipboard-check"></i> Evaluate</th>
+                    <th><i class="bi bi-bullseye"></i> Set Goal</th>
+                    <th><i class="bi bi-chat-left-quote"></i> Feedback</th>
+                </tr>
+                </thead>
+
+                <tbody>
+                <tr th:each="emp : ${employees}">
+                    <!-- Name -->
+                    <td>
+                        <strong th:text="${emp.name}" class="text-dark"></strong>
+                    </td>
+
+                    <!-- Email -->
+                    <td th:text="${emp.email}" class="text-muted"></td>
+
+                    <!-- Evaluate -->
+                    <td>
+                        <form method="post" th:action="@{'/evaluate/' + ${emp.id}}">
+                            <div class="row g-2">
+                                <div class="col">
+                                    <input class="form-control" name="criteria" placeholder="Criteria">
+                                </div>
+                                <div class="col">
+                                    <input class="form-control" name="rating" type="number" placeholder="Rating">
+                                </div>
+                                <div class="col">
+                                    <input class="form-control" name="comments" placeholder="Comments">
+                                </div>
+                                <div class="col-auto">
+                                    <button class="btn btn-success action-btn">
+                                        <i class="bi bi-check-circle"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </td>
+
+                    <!-- Set Goal -->
+                    <td>
+                        <form method="post" th:action="@{'/set-goal/' + ${emp.id}}">
+                            <div class="row g-2">
+                                <div class="col">
+                                    <input name="goal" class="form-control" placeholder="Goal">
+                                </div>
+                                <div class="col">
+                                    <input name="date" type="date" class="form-control">
+                                </div>
+                                <div class="col-auto">
+                                    <button class="btn btn-warning action-btn">
+                                        <i class="bi bi-flag-fill"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </td>
+
+                    <!-- Feedback -->
+                    <td>
+                        <form method="post" th:action="@{'/feedback/' + ${emp.id}}">
+                            <div class="row g-2">
+                                <div class="col">
+                                    <input name="feedback" class="form-control" placeholder="Feedback">
+                                </div>
+                                <div class="col">
+                                    <input name="rating" type="number" class="form-control" placeholder="Rating">
+                                </div>
+                                <div class="col-auto">
+                                    <button class="btn btn-secondary action-btn text-white">
+                                        <i class="bi bi-send-fill"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </td>
+                </tr>
+                </tbody>
+
+            </table>
+        </div>
+    </div>
+
+</div>
+
+</body>
+</html>
